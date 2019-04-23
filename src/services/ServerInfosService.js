@@ -31,6 +31,36 @@ class ServerInfosService {
         return res.Message
       })
   }
+  descr () {
+    if (!RconService.isConnected()) {
+      return Promise.resolve({})
+    }
+    return RconService.request('server.description')
+      .then((res) => {
+        const raw = res.Message
+        return raw.match(/server.description: "(.+?)"$/)[1]
+      })
+  }
+  url () {
+    if (!RconService.isConnected()) {
+      return Promise.resolve({})
+    }
+    return RconService.request('server.url')
+      .then((res) => {
+        const raw = res.Message
+        return raw.match(/server.url: "(.+?)"$/)[1]
+      })
+  }
+  headimage () {
+    if (!RconService.isConnected()) {
+      return Promise.resolve({})
+    }
+    return RconService.request('server.headerimage')
+      .then((res) => {
+        const raw = res.Message
+        return raw.match(/server.headerimage: "(.+?)"$/)[1]
+      })
+  }
   /**
    * Helper to register an event listener
    * @param fn

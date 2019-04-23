@@ -3,7 +3,7 @@
     <div @click.stop class="chat-settings">
       <button class="button dropdown tiny" @click="settingsShown = !settingsShown"><i class="ion-gear-a"></i></button>
       <ul v-if="settingsShown" class="vertical dropdown menu" data-dropdown-menu>
-        <li><a><input type="checkbox" v-model="richText" id="richText"><label for="richText">Enable rich text</label></a></li>
+        <li><a><input type="checkbox" v-model="richText" id="richText"><label for="richText">启用富文本</label></a></li>
       </ul>
     </div>
     <div ref="win" class="chat-wrapper">
@@ -23,8 +23,8 @@
     </div>
     <div class="chat-input">
       <form @submit.prevent="submit">
-        <input type="text" v-model="input"/>
-        <button class="button">Send</button>
+        <input style="width: 95%" type="text" v-model="input"/>
+        <button style="width: 5%" class="button">发送</button>
       </form>
     </div>
   </div>

@@ -7,13 +7,17 @@
     </div>
     <div class="top-bar-right">
       <ul class="menu">
-        <li><span>{{players}} <i class="ion ion-person-stalker"></i></span></li>
-        <li><button type="button" @click="logout" class="button">Logout</button></li>
+        <li class="online_users"><span>{{players}} <i class="ion ion-person-stalker"></i></span></li>
+        <li><button type="button" @click="logout" class="button">退出登录</button></li>
       </ul>
     </div>
   </div>
 </template>
-
+<style>
+  .online_users {
+    margin-top: 8px;
+  }
+</style>
 <script type="text/babel">
   import LoginService from '../../services/LoginService'
   import ServerInfoService from '../../services/ServerInfosService'

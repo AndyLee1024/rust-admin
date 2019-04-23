@@ -5,9 +5,16 @@
       <button class="close-button" type="button" @click="cancel">
         X
       </button>
+      <div class="control text-center grid-x" v-if="show_reason">
+           <div class="medium-8 cell medium-offset-2">
+            <label>
+              <input type="text" placeholder="请输入理由（可为空）" v-model="reason">
+            </label>
+          </div>
+       </div>
       <div class="control text-center">
-        <button class="button success" @click="confirm">Confirm</button>
-        <button class="button" @click="cancel">Cancel</button>
+        <button class="button success" @click="confirm">确定</button>
+        <button class="button" @click="cancel">取消</button>
       </div>
     </div>
   </div>
@@ -15,7 +22,13 @@
 
 <script type="text/babel">
   export default {
+    data () {
+      return {
+        reason: ''
+      }
+    },
     props: {
+      show_reason: false,
       payload: {
         type: Object,
         default: () => {

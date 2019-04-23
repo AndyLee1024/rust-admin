@@ -60,10 +60,50 @@ class PlayersService {
    */
   ban (id, reason) {
     reason = reason || ''
-    return RconService.request(`global.kick "${id}" "${reason}"`)
+    return RconService.request(`global.ban "${id}" "${reason}"`)
       .then(res => {
         return res.Message
       })
+  }
+
+  /**
+   * Get all baned user
+   * @returns {Promise<any>}
+   */
+  bans () {
+    return RconService.request('global.bans').then(res => {
+      return res.Message
+    })
+  }
+  teleport (p1, p2) {
+    return RconService.request(`teleport ${p1} ${p2}`).then(res => {
+      return res.Message
+    })
+  }
+  /**
+   * Give item to player
+   * @param steamId
+   * @param shortName
+   * @param amount
+   * @param type
+   * @returns {Promise<any>}
+   */
+  giveItem (steamId = '', shortName, amount = 1, type) {
+    let command
+    if (type === 'player') {
+      command = `inventory.giveto ${steamId} ${shortName} ${amount}`
+    } else {
+      command = `inventory.giveall ${shortName} ${amount}`
+    }
+    return RconService.request(command).then(res => {
+      return res.Message
+    })
+  }
+
+  unban (id) {
+    return RconService.request(`global.unban ${id}`).then(res => {
+      return res.Message
+    })
   }
 
   inGame () {

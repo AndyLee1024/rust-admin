@@ -1,65 +1,65 @@
 <template>
   <div class="player-info">
     <div v-if="player || true">
-      <div class="row">
+      <div class="grid-x">
         <div class="small-12" v-if="!isConnected">
-          <p>This player is not connected</p>
+          <p>当前用户未连接</p>
         </div>
-        <div v-if="isConnected" class="column username">
+        <div v-if="isConnected" class="cell username large-8 large-offset-2">
           <h3>{{player.DisplayName}}</h3>
           <div class="steam-btns">
-            <a class="button steam" target="_blank" :href="'http://www.steamcommunity.com/profiles/' + player.SteamID"><i class="ion-steam"></i><span>Profile</span></a>
-            <a v-if="player.OwnerSteamID !== '0'" class="button steam" target="_blank" :href="'http://www.steamcommunity.com/profiles/' + player.OwnerSteamID"><i class="ion-steam"></i><span>Owner</span></a>
+            <a class="button steam" target="_blank" :href="'http://www.steamcommunity.com/profiles/' + player.SteamID"><i class="ion-steam"></i><span>玩家Steam信息</span></a>
+            <a v-if="player.OwnerSteamID !== '0'" class="button steam" target="_blank" :href="'http://www.steamcommunity.com/profiles/' + player.OwnerSteamID"><i class="ion-steam"></i><span>所有者</span></a>
           </div>
         </div>
       </div>
-      <div class="tiles row">
-        <div class="column small-6 large-4">
-          <stats-tile v-if="isConnected" class="aqua" name="Violation Level" :value="player.VoiationLevel" icon="ion-alert-circled"></stats-tile>
+      <div class="tiles grid-x">
+        <div class="cell small-6 large-3 large-offset-2">
+          <stats-tile v-if="isConnected" class="aqua" name="违规等级" :value="player.VoiationLevel" icon="ion-alert-circled"></stats-tile>
         </div>
-        <div class="column small-6 large-4">
-          <stats-tile v-if="isConnected" class="green" name="IP Address" :value="ip(player.Address)" icon="ion-wifi"></stats-tile>
+        <div class="cell small-6 large-3">
+          <stats-tile v-if="isConnected" class="green" name="IP 地址" :value="ip(player.Address)" icon="ion-wifi"></stats-tile>
         </div>
-        <div class="column small-6 large-4">
-          <stats-tile v-if="isConnected" class="red" name="Duration" :value="duration(player.ConnectedSeconds)" icon="ion-clock"></stats-tile>
+        <div class="cell small-6 large-3">
+          <stats-tile v-if="isConnected" class="red" name="在线时间" :value="duration(player.ConnectedSeconds)" icon="ion-clock"></stats-tile>
         </div>
-        <div class="column small-6 large-4">
-          <stats-tile v-if="isConnected" class="orange" name="Health" :value="player.Health" icon="ion-heart"></stats-tile>
+        <div class="cell small-6 large-3 large-offset-2">
+          <stats-tile v-if="isConnected" class="orange" name="健康值" :value="player.Health" icon="ion-heart"></stats-tile>
         </div>
-        <div class="column small-6 large-4">
+        <div class="cell small-6 large-3">
           <stats-tile v-if="isConnected" class="aqua" name="Ping" :value="player.Ping" icon="ion-connection-bars"></stats-tile>
         </div>
-        <div class="column small-6 large-4">
-          <stats-tile v-if="isConnected" class="green" name="Level" :value="player.CurrentLevel" icon="ion-arrow-up-a"></stats-tile>
+        <div class="cell small-6 large-3">
+          <stats-tile v-if="isConnected" class="green" name="等级" :value="player.CurrentLevel" icon="ion-arrow-up-a"></stats-tile>
         </div>
-        <div class="column small-6 large-4">
-          <stats-tile v-if="isConnected" class="red" name="XP" :value="player.UnspentXp" icon="ion-plus-round"></stats-tile>
+        <div class="cell small-6 large-3 large-offset-2">
+          <stats-tile v-if="isConnected" class="red" name="经验" :value="player.UnspentXp" icon="ion-plus-round"></stats-tile>
         </div>
       </div>
 
       <div class="actions">
-        <div class="row">
-          <div class="column small-12">
-            <h4>Actions</h4>
-            <button class="button warning" @click="beforeKick"><i class="ion-alert"></i> Kick</button>
-            <button class="button alert" @click="beforeBan"><i class="ion-minus-circled"></i> Ban</button>
+        <div class="grid-x">
+          <div class="cell large-8 large-offset-2">
+            <h4>操作</h4>
+            <button class="button warning" @click="beforeKick"><i class="ion-alert"></i> 踢出</button>
+            <button class="button alert" @click="beforeBan"><i class="ion-minus-circled"></i> 封禁</button>
           </div>
         </div>
       </div>
       <div class="logs">
-        <div class="row">
-          <div class="column small-12">
-            <h4>Related logs</h4>
+        <div class="grid-x">
+          <div class="cell small-12 large-8 large-offset-2">
+            <h4>相关记录</h4>
             <console :logs="logs" :read-only="true"></console>
           </div>
         </div>
       </div>
     </div>
     <confirm-modal v-if="kickConfirmationShown" @confirm="kick" @cancel="kickConfirmationShown = false">
-      <p class="text-center"><br><br>Are you sure to want to kick {{player.DisplayName || $route.params.id}} ?</p>
+      <p class="text-center"><br><br>你确定要踢出玩家 {{player.DisplayName || $route.params.id}} ?</p>
     </confirm-modal>
     <confirm-modal v-if="banConfirmationShown" @confirm="ban" @cancel="banConfirmationShown = false">
-      <p class="text-center"><br><br>Are you sure to want to ban {{player.DisplayName || $route.params.id}} ?</p>
+      <p class="text-center"><br><br>你确定要封禁玩家 {{player.DisplayName || $route.params.id}} ?</p>
     </confirm-modal>
   </div>
 </template>
