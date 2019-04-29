@@ -1119,7 +1119,7 @@ export default {
     },
     {
       'name': 'Scrap',
-      'chinese_name': '废',
+      'chinese_name': '废料',
       'short_id': 'scrap',
       'image': 'https://dayzhub-1251179143.cos.ap-shanghai.myqcloud.com/rust/scrap.png'
     },
@@ -2505,7 +2505,7 @@ export default {
     },
     {
       'name': 'Red Keycard',
-      'chinese_name': '红色的不是原来那个钥匙卡',
+      'chinese_name': '红色钥匙卡',
       'short_id': 'keycard_red',
       'image': 'https://dayzhub-1251179143.cos.ap-shanghai.myqcloud.com/rust/keycard_red.png'
     },

@@ -8,13 +8,13 @@
       <div class="control text-center grid-x" v-if="show_reason">
            <div class="medium-8 cell medium-offset-2">
             <label>
-              <input type="text" placeholder="请输入理由（可为空）" v-model="reason">
+              <el-input v-model="reason" placeholder="请输入理由（可为空)"></el-input>
             </label>
           </div>
        </div>
       <div class="control text-center">
-        <button class="button success" @click="confirm">确定</button>
-        <button class="button" @click="cancel">取消</button>
+        <el-button type="success" @click="confirm" size="small">确定</el-button>
+        <el-button type="info" @click="cancel" size="small">取消</el-button>
       </div>
     </div>
   </div>

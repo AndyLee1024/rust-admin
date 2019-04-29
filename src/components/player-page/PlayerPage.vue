@@ -8,8 +8,8 @@
         <div v-if="isConnected" class="cell username large-8 large-offset-2">
           <h3>{{player.DisplayName}}</h3>
           <div class="steam-btns">
-            <a class="button steam" target="_blank" :href="'http://www.steamcommunity.com/profiles/' + player.SteamID"><i class="ion-steam"></i><span>玩家Steam信息</span></a>
-            <a v-if="player.OwnerSteamID !== '0'" class="button steam" target="_blank" :href="'http://www.steamcommunity.com/profiles/' + player.OwnerSteamID"><i class="ion-steam"></i><span>所有者</span></a>
+            <a class="button steam" target="_blank" :href="'https://steamid.facheme.com/lookup/' + player.SteamID"><i class="ion-steam"></i><span>玩家Steam信息</span></a>
+            <a v-if="player.OwnerSteamID !== '0'" class="button steam" target="_blank" :href="'https://steamid.facheme.com/lookup/' + player.OwnerSteamID"><i class="ion-steam"></i><span>所有者</span></a>
           </div>
         </div>
       </div>
@@ -27,7 +27,7 @@
           <stats-tile v-if="isConnected" class="orange" name="健康值" :value="player.Health" icon="ion-heart"></stats-tile>
         </div>
         <div class="cell small-6 large-3">
-          <stats-tile v-if="isConnected" class="aqua" name="Ping" :value="player.Ping" icon="ion-connection-bars"></stats-tile>
+          <stats-tile v-if="isConnected" class="aqua" name="延迟" :value="player.Ping" icon="ion-connection-bars"></stats-tile>
         </div>
         <div class="cell small-6 large-3">
           <stats-tile v-if="isConnected" class="green" name="等级" :value="player.CurrentLevel" icon="ion-arrow-up-a"></stats-tile>

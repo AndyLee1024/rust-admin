@@ -15,6 +15,20 @@ class PlayersService {
       })
   }
 
+  addAdmin (steamid, type, name = '', reason = '') {
+    return Promise.all([
+      RconService.request(`${type}id ${steamid} ${name} ${reason}`),
+      RconService.request('writecfg')
+    ])
+  }
+
+  removeAdmin (steamid, type) {
+    return Promise.all([
+      RconService.request(`remove${type} ${steamid}`),
+      RconService.request('writecfg')
+    ])
+  }
+
   listWithPosition () {
     return Promise.all([
       this.list(),

@@ -1,43 +1,52 @@
 <template>
   <div class="grid-container">
+    <el-container>
+      <el-main>
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>服务器状态</span>
+          </div>
+          <div class="server-info">
+            <div class="tiles grid-x">
+              <div class="cell small-6 large-3">
+                <stats-tile class="aqua" name="玩家数" :value="players" icon="ion-person-stalker"></stats-tile>
+              </div>
+              <div class="cell small-6 large-3">
+                <stats-tile class="green" name="加入中" :value="joining" icon="ion-person-stalker"></stats-tile>
+              </div>
+              <div class="cell small-6 large-3">
+                <stats-tile class="orange" name="排队中" :value="queued" icon="ion-person-stalker"></stats-tile>
+              </div>
+              <div class="cell small-6 large-3">
+                <stats-tile class="red" name="物资数量" :value="entityCount" icon="ion-trash-b"></stats-tile>
+              </div>
+              <div class="cell small-6 large-3 ">
+                <stats-tile class="aqua" name="游戏内时间" :value="gameTime" icon="ion-clock"></stats-tile>
+              </div>
 
-  <div class="server-info">
-    <div class="tiles grid-x">
-      <div class="cell small-6 large-3">
-        <stats-tile class="aqua" name="玩家数" :value="players" icon="ion-person-stalker"></stats-tile>
-      </div>
-      <div class="cell small-6 large-3">
-        <stats-tile class="green" name="加入中" :value="joining" icon="ion-person-stalker"></stats-tile>
-      </div>
-      <div class="cell small-6 large-3">
-        <stats-tile class="orange" name="排队中" :value="queued" icon="ion-person-stalker"></stats-tile>
-      </div>
-      <div class="cell small-6 large-3">
-        <stats-tile class="red" name="物资数量" :value="entityCount" icon="ion-trash-b"></stats-tile>
-      </div>
-      <div class="cell small-6 large-3 ">
-        <stats-tile class="aqua" name="游戏内时间" :value="gameTime" icon="ion-clock"></stats-tile>
-      </div>
-      <div class="cell small-6 large-3">
-        <stats-tile class="green" name="地图" :value="map" icon="ion-map"></stats-tile>
-      </div>
-      <div class="cell small-6 large-3">
-        <stats-tile class="orange" name="FPS值" :value="framerate" icon="ion-arrow-graph-up-right"></stats-tile>
-      </div>
-      <div class="cell small-6 large-3">
-        <stats-tile class="red" name="开机时间" :value="upTime" icon="ion-clock"></stats-tile>
-      </div>
-      <div class="cell small-6 large-3">
-        <stats-tile class="aqua" name="内存占用" :value="memory" icon="ion-arrow-graph-up-right"></stats-tile>
-      </div>
-    </div>
+              <div class="cell small-6 large-3">
+                <stats-tile class="orange" name="FPS值" :value="framerate" icon="ion-arrow-graph-up-right"></stats-tile>
+              </div>
+              <div class="cell small-6 large-3">
+                <stats-tile class="red" name="开机时间" :value="upTime" icon="ion-clock"></stats-tile>
+              </div>
+              <div class="cell small-6 large-3">
+                <stats-tile class="aqua" name="内存占用" :value="memory" icon="ion-arrow-graph-up-right"></stats-tile>
+              </div>
+              <div class="cell small-6 large-6">
+                <stats-tile class="green" name="地图" :value="map" icon="ion-map"></stats-tile>
+              </div>
+            </div>
+          </div>
+          <div class="tiles grid-x">
+            <div class="cell">
+              <ve-line :data="chartData"></ve-line>
+            </div>
+          </div>
+        </el-card>
+      </el-main>
+    </el-container>
   </div>
-    <div class="tiles grid-x">
-      <div class="cell">
-        <ve-line :data="chartData"></ve-line>
-      </div>
-    </div>
-    </div>
 </template>
 
 <script type="text/babel">

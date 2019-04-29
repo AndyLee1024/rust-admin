@@ -1,101 +1,111 @@
 <template>
   <div class="players-page">
-    <div class="row expanded" >
-      <ul class="menu">
-        <li @click="change_type(1)" v-bind:class="{active : players_active}"><a>在线玩家列表</a></li>
-        <li @click="change_type(2)" v-bind:class="{active : bans_active}"><a>封禁玩家列表</a></li>
-        <li @click="change_type(3)" v-bind:class="{active : teleport }"><a>玩家传送</a></li>
-      </ul>
-    </div>
-    <div class="expanded row">
-      <div class="small-12 column">
-        <table class="table" v-if="type==='players'">
-          <thead>
-          <tr>
-            <th>玩家昵称</th>
-            <th>Steam ID</th>
-            <th>权限级别</th>
-            <th>IP 地址</th>
-            <th>在线时间</th>
-            <th>健康值</th>
-            <th>Ping</th>
-            <th>操作</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="p in players">
-            <td><router-link :to="{name: 'player', params: {id: p.SteamID}}" v-text="p.DisplayName"></router-link></td>
-            <td><router-link :to="{name: 'player', params: {id: p.SteamID}}" v-text="p.SteamID"></router-link></td>
-            <td v-text="p.VoiationLevel"></td>
-            <td v-text="p.Address"></td>
-            <td v-text="duration(p.Duration)"></td>
-            <td v-text="p.Health"></td>
-            <td v-text="p.Ping + ' ms'"></td>
-            <td class="actions">
-              <button class="button warning small" @click="beforeKick(p)"><i class="ion-alert"></i> 踢出</button>
-              <button class="button alert small" @click="beforeBan(p)"><i class="ion-minus-circled"></i> 封禁</button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-        <table class="table" v-if="type==='bans'">
-          <thead>
-          <tr>
-            <th>玩家昵称</th>
-            <th>Steam ID</th>
-            <th>状态</th>
-            <th>封禁理由</th>
-            <th>操作</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="p in players">
-            <td><router-link :to="{name: 'player', params: {id: p.steamid}}" v-text="p.username"></router-link></td>
-            <td><router-link :to="{name: 'player', params: {id: p.steamid}}" v-text="p.steamid"></router-link></td>
-            <td v-text="p.group"></td>
-            <td v-text="p.notes"></td>
-            <td class="actions">
-              <button class="button success small" @click="beforeUnBan(p)"><i class="fa fa-check"></i> 解封</button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-        <div v-if="type==='teleport'" class="cell">
-          <div class="grid-x grid-padding-x" style="margin-top: 10px">
-            <div class="medium-2 cell">
-              <label><span class="player-nickname">传送</span>
-                <el-select v-model="tpu" filterable placeholder="请选择">
-                  <el-option
-                    v-for="item in players"
-                    :key="item.SteamID"
-                    :label="item.DisplayName"
-                    :value="item.DisplayName">
-                  </el-option>
-                </el-select>
-              </label>
-            </div>
-            <div class="medium-2 cell">
-              <label><span class="player-nickname">到</span>
-                <el-select v-model="tpu2" filterable placeholder="请选择">
-                  <el-option
-                    v-for="item in players"
-                    :key="item.SteamID"
-                    :label="item.DisplayName"
-                    :value="item.DisplayName">
-                  </el-option>
-                </el-select>
-              </label>
-            </div>
-            <div class="medium-2 cell">
-              <label>
-                <el-button type="success" @click="teleport_player()">传送</el-button>
-              </label>
-            </div>
-          </div>
-        </div>
 
-      </div>
+    <div class="grid-container">
+      <el-container>
+        <el-main>
+          <el-card class="box-card">
+            <div slot="header" class="clearfix">
+              <span>玩家管理</span>
+            </div>
+
+            <el-tabs v-model="active" @tab-click="change_type">
+              <el-tab-pane label="在线玩家列表" name="first">
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th>玩家昵称</th>
+                    <th>Steam ID</th>
+                    <th>权限级别</th>
+                    <th>IP 地址</th>
+                    <th>在线时间</th>
+                    <th>健康值</th>
+                    <th>延迟</th>
+                    <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr v-for="p in players">
+                    <td><router-link :to="{name: 'player', params: {id: p.SteamID}}" v-text="p.DisplayName"></router-link></td>
+                    <td><router-link :to="{name: 'player', params: {id: p.SteamID}}" v-text="p.SteamID"></router-link></td>
+                    <td v-text="p.VoiationLevel"></td>
+                    <td v-text="p.Address"></td>
+                    <td v-text="duration(p.Duration)"></td>
+                    <td v-text="p.Health"></td>
+                    <td v-text="p.Ping + ' ms'"></td>
+                    <td class="actions">
+                      <el-button-group>
+                      <el-button type="warning" @click="beforeKick(p)" size="small" icon="el-icon-warning"> 踢出</el-button>
+                      <el-button type="danger" @click="beforeBan(p)" size="small" icon="el-icon-remove"> 封禁</el-button>
+                      </el-button-group>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </el-tab-pane>
+              <el-tab-pane label="封禁玩家列表" name="second">
+                <table class="table" v-if="type==='bans'">
+                  <thead>
+                  <tr>
+                    <th>玩家昵称</th>
+                    <th>Steam ID</th>
+                    <th>状态</th>
+                    <th>封禁理由</th>
+                    <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr v-for="p in players">
+                    <td><router-link :to="{name: 'player', params: {id: p.steamid}}" v-text="p.username"></router-link></td>
+                    <td><router-link :to="{name: 'player', params: {id: p.steamid}}" v-text="p.steamid"></router-link></td>
+                    <td v-text="p.group"></td>
+                    <td v-text="p.notes"></td>
+                    <td class="actions">
+                      <el-button type="success" size="small" @click="beforeUnBan(p)" icon="el-icon-check">解封</el-button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </el-tab-pane>
+              <el-tab-pane label="玩家传送" name="third">
+                <el-form ref="form" label-width="80px">
+
+                  <el-form-item label="玩家1">
+                    <el-select v-model="tpu" placeholder="请选择玩家">
+                      <el-option
+                        v-for="item in players"
+                        :key="item.SteamID"
+                        :label="item.DisplayName"
+                        :value="item.DisplayName">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+
+                  <el-form-item label="玩家2">
+                    <el-select v-model="tpu2" placeholder="请选择玩家">
+                      <el-option
+                        v-for="item in players"
+                        :key="item.SteamID"
+                        :label="item.DisplayName"
+                        :value="item.DisplayName">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+
+                  <el-form-item>
+                    <el-button type="primary" @click="teleport_player">传送</el-button>
+                  </el-form-item>
+
+                </el-form>
+
+              </el-tab-pane>
+            </el-tabs>
+          </el-card>
+        </el-main>
+      </el-container>
     </div>
+
+
     <confirm-modal ref='confirm' v-if="kickConfirmationShown" show_reason="true" @confirm="kick" @cancel="kickConfirmationShown = false">
       <p class="text-center"><br><br>你确定要踢出玩家 {{player.DisplayName || $route.params.id}} ?</p>
     </confirm-modal>
@@ -117,8 +127,7 @@
     data () {
       return {
         type: 'players',
-        players_active: 'is_active',
-        bans_active: null,
+        active: 'first',
         players: [],
         players2: [],
         tpu: null,
@@ -142,6 +151,11 @@
           this.$message.error('传送的玩家不可为空!')
           return false
         }
+
+        if (this.tpu === this.tpu2) {
+          this.$message.error('你这是要闹哪样! 不能自己互相传送')
+          return false
+        }
         return PlayersService.teleport(this.tpu, this.tpu2).then(res => {
           this.$message({
             message: '传送成功',
@@ -150,21 +164,21 @@
           return false
         })
       },
-      change_type (type) {
+      change_type (tab, event) {
         this.players = []
-        if (type === 1) {
+        if (this.active === 'first') {
           this.type = 'players'
           this.bans_active = null
           this.players_active = 'is_active'
           this.teleport = null
         }
-        if (type === 2) {
+        if (this.active === 'second') {
           this.type = 'bans'
           this.players_active = null
           this.bans_active = 'is_active'
           this.teleport = null
         }
-        if (type === 3) {
+        if (this.active === 'three') {
           this.type = 'teleport'
           this.players_active = null
           this.teleport = 'is_active'

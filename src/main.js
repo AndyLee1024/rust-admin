@@ -16,19 +16,22 @@ import PlayersPage from 'components/players-page/PlayersPage.vue'
 import ChatPage from 'components/chat-page/ChatPage.vue'
 import MapPage from 'components/map-page/MapPage.vue'
 import PlayerPage from 'components/player-page/PlayerPage.vue'
-import ToolsPage from 'components/tools-page/ToolsPage.vue'
-import ConfigurePage from 'components/configure-page/ConfigurePage.vue'
+import ToolsPage from 'components/tools-page/ToolsPage'
+import PluginPage from 'components/plugin-page/PluginPage'
+import ConfigurePage from 'components/configure-page/ConfigurePage'
+import AdminPage from 'components/admin-page/Admin'
 import VTooltip from 'v-tooltip'
 import ElementUI from 'element-ui'
 import VCharts from 'v-charts'
 import 'element-ui/lib/theme-chalk/index.css'
-import { DataTables } from 'vue-data-tables'
+import VueDataTables from 'vue-data-tables'
 
 Vue.use(ElementUI)
-Vue.use(DataTables)
+Vue.use(VueDataTables)
 Vue.use(VCharts)
 Vue.use(VTooltip)
 Vue.use(VueRouter)
+
 const routes = [
   {
     name: 'home',
@@ -44,6 +47,11 @@ const routes = [
     name: 'map',
     path: '/map',
     component: MapPage
+  },
+  {
+    name: 'admin',
+    path: '/admin',
+    component: AdminPage
   },
   {
     name: 'players',
@@ -69,6 +77,11 @@ const routes = [
     name: 'tools',
     path: '/tools',
     component: ToolsPage
+  },
+  {
+    name: 'plugins',
+    path: '/plugins',
+    component: PluginPage
   }
 ]
 

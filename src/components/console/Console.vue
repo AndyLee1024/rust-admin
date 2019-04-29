@@ -13,6 +13,7 @@
     <div class="console-input" v-if="!readOnly">
       <form @submit.prevent="submit">
         <input type="text" style="width: 90%" v-model="input" @keyup="handleKeyUp" @change="handleChange">
+
         <button style="width: 10%" class="button" type="submit">发送指令</button>
       </form>
     </div>
