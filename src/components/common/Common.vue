@@ -1,5 +1,5 @@
 <script>
-  const rconAddress = '127.0.0.1'
+  const rconAddress = localStorage.getItem('rcon_address')
   const host = rconAddress.split(':')[0]
 
   function address () {
